@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="card w-50" style="margin: auto; margin-top: 5%;">
+            <div class="card-body">
+                <h5 class="card-title">Lab4</h5>
+                <p class="card-text" id="result"></p>
+                <form style="margin-top: 2%; "></form>
+                <div class="row" style="margin:auto; padding-bottom: 1%;">
+                    <button onclick="Get()" class="btn btn-primary">Get List</button>
+                    <button onclick="Post()" type="submit" class="btn btn-success">Add</button>
+                    <button onclick="Put()"  class="btn btn-warning">Edit</button>
+                </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="idInput"  placeholder="Enter id">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="nameInput" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                      <input type="date" class="form-control" id="bdayInput">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            function Get() {
+                fetch(  'http://localhost:3000/api/db', 
+                        {method: 'GET', mode: 'no-cors', 
+                        headers: {'Content-Type': 'application/json', 'Accept':'application/json'}})
+                .then(resp => {return resp.json()})
+                .then(list => {
+                    let p = document.getElementById('result')
+                    p.innerHTML = ''
+                    list.forEach(el => {
+                        p.innerHTML += el.id + ') ' + el.name + ', ' + el.bday + '</br>'
+                    })
+                })
+            }   
+
+            function Post() {
+                if(idInput.value != '' && nameInput.value != '' && bdayInput.value != 'undefined') {
+                    fetch(  'http://localhost:3000/api/db',
+                        { method: 'POST', mode: 'no-cors', 
+                          headers: {'Content-Type': 'application/json', 'Accept':'application/json'},
+                          body: JSON.stringify({id: idInput.value, name: nameInput.value, bday: bdayInput.value})
+                        }
+                    )
+                    .then(response => {return response.json()})
+                    
+                }
+                
+            }
+
+            function Put() {
+                if(idInput.value != '') {
+                    fetch(  'http://localhost:3000/api/db',
+                        { method: 'PUT', 
+                          headers: {'Content-Type': 'application/json', 'Accept':'application/json'},
+                          body: JSON.stringify({id: idInput.value, name: nameInput.value, bday: bdayInput.value})
+                        }
+                    )
+                    .then(response => {return response.json()})
+                    
+                }
+            }
+        </script>
+        
+    </body>
+</html>
