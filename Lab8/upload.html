@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="card w-50" style="margin: auto; margin-top: 5%;">
+            <div class="card-body">
+                <h5 class="card-title">Lab8</h5>
+                <p class="card-text" id="result"></p>
+                <form method="POST" action="http://localhost:3000/upload" enctype="multipart/form-data" style="margin-top: 2%;">
+                
+                    <div class="form-group">
+                      <input type="file" class="form-control" id="ff" name="filefield">
+                      <label for="ff">Choose a file: nmp</label>
+                    </div>
+                    
+                    <input type="submit" name="sub" value="Submit" class="btn btn-success"/>
+                </form>
+            </div>
+        </div>
+        
+    </body>
+</html>
