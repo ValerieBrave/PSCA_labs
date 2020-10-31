@@ -1,0 +1,14 @@
+{
+  "name": "lab9",
+  "version": "1.0.0",
+  "description": "lab9 tasks",
+  "main": "9-01.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "valeriasmelova",
+  "license": "ISC",
+  "dependencies": {
+    "xml2js": "^0.4.23"
+  }
+}
