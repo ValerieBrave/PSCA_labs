@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab10</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <h3 style="color: deeppink;">10-1</h3>
+        <button class="btn btn-primary" onclick="startWS()">Start WS server</button>
+        <div id="messages">
+            <span style="color: deeppink; font-size: medium;">WebSocket Server Messages are back!!!</span>
+        </div>
+        <script>
+            let n =0
+            function startWS() {
+                let socket = new WebSocket('ws://localhost:4000/wsserver')
+                socket.onopen = () => {
+                    console.log('socket onopen')
+                    setInterval(() => { socket.send(`10-01-client:${++n}`)}, 3000)
+                    setTimeout(() => {socket.close()}, 25000)
+                }
+                socket.onmessage = (e) => {
+                    console.log('socket onmessage')
+                    let div = document.getElementById('messages')
+                    div.innerHTML += e.data
+                }
+                socket.onclose = (e) => {
+                    console.log('socket onclose')
+                }
+            }
+        </script>
+    </body>
+</html>
