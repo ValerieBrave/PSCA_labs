@@ -1,0 +1,14 @@
+{
+  "name": "lab12",
+  "version": "1.0.0",
+  "description": "lab12",
+  "main": "12-1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "valeriasmelova",
+  "license": "ISC",
+  "dependencies": {
+    "rpc-websockets": "^7.4.8"
+  }
+}
