@@ -1,0 +1,16 @@
+{
+  "name": "lab14",
+  "version": "1.0.0",
+  "description": "lab14",
+  "main": "server.js",
+  "dependencies": {
+    "mssql": "^6.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "valeriasmelova",
+  "license": "ISC"
+}
