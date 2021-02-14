@@ -7,4 +7,7 @@ const client = redis.createClient('//redis-12268.c10.us-east-1-4.ec2.cloud.redis
 for (i = 1; i< 5; i++) {
     setTimeout(()=>{client.publish('channel-lerchik', `hello from lerchik `)}, i*1000)
 }
-client.quit();
+//client.quit();    //error??
+setTimeout(()=>{
+    client.quit()   // for NODE.js v14+
+}, 60000)

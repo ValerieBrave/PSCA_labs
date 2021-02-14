@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+const { Op } = require('sequelize');
 const Model = Sequelize.Model
 
 class Faculty extends Model{}
@@ -14,15 +15,19 @@ class Auditorium_type extends Model{}
             faculty: {type: Sequelize.STRING, allowNull: false, primaryKey: true},
             faculty_name: {type: Sequelize.STRING, allowNull: false}
         },
-        {sequelize, modelName: 'Faculty', tableName: 'faculty', timestamps: false}
+        {
+            hooks:{
+            beforeCreate: (instance, options) => { console.log('--local faculty beforeCreate hook--');},
+            afterCreate: (instance, options) => { console.log('--local faculty afterCreate hook--');}        },
+        sequelize, modelName: 'Faculty', tableName: 'Faculty', timestamps: false}
     );
     Pulpit.init(
         {
             pulpit: {type: Sequelize.STRING, allowNull: false, primaryKey: true},
             pulpit_name: {type: Sequelize.STRING, allowNull: false},
-            faculty: {type: Sequelize.STRING, allowNull: true, references: {model: Faculty, key: 'faculty'}}
+            faculty: {type: Sequelize.STRING, allowNull: false, references:{model: Faculty, key:'faculty'}}
         },
-        {sequelize, modelName: 'Pulpit', tableName: 'pulpit', timestamps: false}
+        {sequelize, modelName: 'Pulpit', tableName: 'Pulpit', timestamps: false}
     );
     Teacher.init(
         {
@@ -30,7 +35,7 @@ class Auditorium_type extends Model{}
             teacher_name: {type: Sequelize.STRING, allowNull: false},
             pulpit: {type: Sequelize.STRING, allowNull: true, references: {model: Pulpit, key: 'pulpit'}}
         },
-        {sequelize, modelName: 'Teacher', tableName: 'teacher', timestamps: false}
+        {sequelize, modelName: 'Teacher', tableName: 'Teacher', timestamps: false}
     );
     Subject.init(
         {
@@ -38,14 +43,14 @@ class Auditorium_type extends Model{}
             subject_name: {type: Sequelize.STRING, allowNull: false},
             pulpit: {type: Sequelize.STRING, allowNull: true, references: {model: Pulpit, key: 'pulpit'}}
         },
-        {sequelize, modelName: 'Subject', tableName: 'subject', timestamps: false}
+        {sequelize, modelName: 'Subject', tableName: 'Subject', timestamps: false}
     );
     Auditorium_type.init(
         {
             auditorium_type: {type: Sequelize.STRING, allowNull: false, primaryKey: true},
             auditorium_typename: {type: Sequelize.STRING, allowNull: false}
         },
-        {sequelize, modelName: 'Auditorium_type', tableName: 'auditorium_type', timestamps: false}
+        {sequelize, modelName: 'Auditorium_type', tableName: 'Auditorium_type', timestamps: false}
     );
     Auditorium.init(
         {
@@ -54,8 +59,15 @@ class Auditorium_type extends Model{}
             auditorium_capacity: {type: Sequelize.INTEGER, allowNull: false},
             auditorium_type: {type: Sequelize.STRING, allowNull: true, references: {model: Auditorium_type, key: 'auditorium_type'}}
         },
-        {sequelize, modelName: 'Auditorium', tableName: 'auditorium', timestamps: false}
+        {   scopes:{
+            auditoriumsMore:{
+                where: {auditorium_capacity: {[Op.gt]:60}}
+            }},
+            sequelize, modelName: 'Auditorium', tableName: 'Auditorium', timestamps: false}
     );
+
+    Faculty.hasMany(Pulpit, {as: 'faculty_pulpits', foreignKey: 'faculty', sourceKey: 'faculty'})
+    Pulpit.hasMany(Teacher, {as: 'pulpit_teacher', foreignKey: 'pulpit', sourceKey: 'pulpit'})
 }
 exports.ORM =(sequelize) => {
     //создаем все модельки

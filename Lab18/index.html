@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script>
+            function Get() {
+                
+                fetch('http://localhost:3000/api/pulpits', {
+                    method: 'GET', mode: 'no-cors',
+                    headers: {'Content-Type':'application/json', 'Accept':'application/json'}
+                })
+                    .then(response => response.json())
+                    .then(pdata => {
+                        result.innerHTML = '';
+                        console.log('pdata', pdata);
+                        if(pdata.code != undefined) {
+                            alert(pdata.code + ' ' + pdata.err_mes);
+                        } else {
+                            let content = '<table class="table"><thead><tr>' +
+                                '      <th scope="col">pulpit</th>\n' +
+                                '      <th scope="col">name</th>\n' +
+                                '      <th scope="col">faculty</th>\n' +
+                                '    </tr></thead><tbody>\n';
+                            for (let i = 0; i < pdata.length; i++) {
+                                content += '<tr><td>' + pdata[i]['pulpit'] + '</td><td>' + pdata[i]['pulpit_name'] + '</td><td>' + pdata[i]['faculty'] + '</td></tr>';
+                            }
+                            result.innerHTML = content + '</tbody></table>';
+                        }
+                    });
+            }
+            function Post() {
+                
+                fetch('http://localhost:3000/api/pulpits', {
+                    method: 'POST', mode: 'no-cors',
+                    headers: {'Content-Type':'application/json', 'Accept':'application/json'},
+                    body: JSON.stringify({pulpit: pulpit.value, pulpit_name: pulpit_name.value, faculty: faculty.value})
+                })
+                    .then(response => response.json())
+                    .then((pdata) => {
+                        if(pdata.code != undefined) {
+                            alert(pdata.code + ' ' + pdata.err_mes);
+                        } else
+                            console.log('POST.pdata', pdata);
+                    });
+            }
+            function Put() {
+                
+                fetch('http://localhost:3000/api/pulpits', {
+                    method: 'PUT',
+                    headers: {'Content-Type':'application/json', 'Accept':'application/json'},
+                    body: JSON.stringify({pulpit: pulpit.value, pulpit_name: pulpit_name.value, faculty: faculty.value})
+                })
+                    .then(response => response.json())
+                    .then((pdata) => {
+                        if(pdata.code != undefined) {
+                            alert(pdata.code + ' ' + pdata.err_mes);
+                        } else
+                            console.log('PUT.pdata', pdata);
+                    });
+            }
+            function Delete() {
+                
+                fetch('http://localhost:3000/api/pulpits/' + pulpit.value, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then((pdata) => {
+                        if(pdata.code != undefined) {
+                            alert(pdata.code + ' ' + pdata.err_mes);
+                        } else
+                            console.log('DELETE.pdata', pdata);
+                    });
+            }
+        </script>
+    </head>
+    <body>
+        <div class="card w-50" style="margin: auto; margin-top: 5%;">
+            <div class="card-body">
+                <h5 class="card-title">Lab18</h5>
+                
+                <form style="margin-top: 2%; "></form>
+                <div class="row" style="margin:auto; padding-bottom: 1%;">
+                    <button onclick="Get()" class="btn btn-primary">Список кафедр</button>
+                    <button onclick="Post()"  class="btn btn-success">Добавить кафедру</button>
+                    <button onclick="Put()"  class="btn btn-warning">Редактировать кафедру</button>
+                    <button onclick="Delete()" class="btn btn-danger">Удалить кафедру</button>
+                </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="pulpit"  placeholder="Кафедра">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="pulpit_name" placeholder="Полное название">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="faculty" placeholder="Факультет">
+                    </div>
+                </form>
+                <p class="card-text" id="result"></p>
+            </div>
+        </div>
+        
+    </body>
+</html>

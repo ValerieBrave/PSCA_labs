@@ -11,6 +11,6 @@ client.on('end', () => {console.log('end')})
 
 //client.set('k1', 'v1x', (err, res) => {console.log('k1:', 'err = '+ err, 'result = '+res)})
 //client.get('k1', (err, res) => {console.log('k1:', 'err = '+ err, 'result = '+res)})
-client.del('k1', (err, res) => {console.log('k1:', 'err = '+ err, 'result = '+res)})
-client.get('k1', (err, res) => {console.log('k1:', 'err = '+ err, 'result = '+res)})
+//client.del('k1', (err, res) => {console.log('k1:', 'err = '+ err, 'result = '+res)})
+//client.get('k1', (err, res) => {console.log('k1:', 'err = '+ err, 'result = '+res)})
 client.quit()
