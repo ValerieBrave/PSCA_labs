@@ -39,8 +39,8 @@ server.listen(3000, async () => {
   .then(() => {
     return sequelize.transaction({isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.READ_COMMITED})
     .then(t => {
-      sequelize.query('update AUDITORIUM set AUDITORIUM_CAPACITY = AUDITORIUM_CAPACITY +0',
-      {type: sequelize.QueryTypes.UPDATE})
+      sequelize.query('update AUDITORIUM set AUDITORIUM_CAPACITY = AUDITORIUM_CAPACITY +1', {transaction:t},
+      {type: sequelize.QueryTypes.UPDATE} )
       .then((result)=>{
         console.log('before rollback')
         setTimeout(()=>{t.rollback(); console.log('rollback')}, 10000)
