@@ -4,7 +4,6 @@ const {Faculty, Pulpit, Teacher, Subject, Auditorium_type, Auditorium} = require
 
 module.exports = (req, res) => {
     let rurl = url.parse(req.url).pathname
-    //sequelize.sync()
     if(rurl == '/') {
         let html = fs.readFile("./index.html", (err, data) => {
             res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });

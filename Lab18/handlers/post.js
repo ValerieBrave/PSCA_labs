@@ -9,7 +9,7 @@ module.exports = (req, res, body) => {
             res.end(JSON.stringify(body))})
         .catch(err => {
             res.writeHead(500, {'Content-Type': 'application/json; charset=utf-8'})
-            res.end(JSON.stringify(err))})
+            res.end(JSON.stringify({err: err.original.message}))})
     } else if(rurl == '/api/pulpits') {
         Pulpit.create({pulpit: body.pulpit, pulpit_name: body.pulpit_name, faculty: body.faculty})
         .then(result => {
@@ -17,7 +17,7 @@ module.exports = (req, res, body) => {
             res.end(JSON.stringify(body))})
         .catch(err => {
             res.writeHead(500, {'Content-Type': 'application/json; charset=utf-8'})
-            res.end(JSON.stringify(err))})
+            res.end(JSON.stringify({err: err.original.message}))})
     } else if(rurl == '/api/subjects') {
         Subject.create({subject: body.subject,subject_name: body.subject_name,pulpit: body.pulpit})
         .then(result => {
@@ -25,7 +25,7 @@ module.exports = (req, res, body) => {
             res.end(JSON.stringify(body))})
         .catch(err => {
             res.writeHead(500, {'Content-Type': 'application/json; charset=utf-8'})
-            res.end(JSON.stringify(err))})
+            res.end(JSON.stringify({err: err.original.message}))})
     } else if(rurl == '/api/auditoriumtypes') {
         Auditorium_type.create({auditorium_type:body.auditorium_type,auditorium_typename:body.auditorium_typename})
         .then(result => {
@@ -45,6 +45,6 @@ module.exports = (req, res, body) => {
             res.end(JSON.stringify(body))})
         .catch(err => {
             res.writeHead(500, {'Content-Type': 'application/json; charset=utf-8'})
-            res.end(JSON.stringify(err))})
+            res.end(JSON.stringify({err: err.original.message}))})
     }
 }

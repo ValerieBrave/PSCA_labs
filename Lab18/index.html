@@ -13,8 +13,9 @@
                     .then(pdata => {
                         result.innerHTML = '';
                         console.log('pdata', pdata);
-                        if(pdata.code != undefined) {
-                            alert(pdata.code + ' ' + pdata.err_mes);
+                        if(pdata.err != undefined) {
+                            let erm = document.getElementById('err')
+                            erm.innerHTML = pdata.err
                         } else {
                             let content = '<table class="table"><thead><tr>' +
                                 '      <th scope="col">pulpit</th>\n' +
@@ -37,8 +38,9 @@
                 })
                     .then(response => response.json())
                     .then((pdata) => {
-                        if(pdata.code != undefined) {
-                            alert(pdata.code + ' ' + pdata.err_mes);
+                        if(pdata.err != undefined) {
+                            let erm = document.getElementById('err')
+                            erm.innerHTML = pdata.err
                         } else
                             console.log('POST.pdata', pdata);
                     });
@@ -52,9 +54,10 @@
                 })
                     .then(response => response.json())
                     .then((pdata) => {
-                        if(pdata.code != undefined) {
-                            alert(pdata.code + ' ' + pdata.err_mes);
-                        } else
+                        if(pdata.err != undefined) {
+                            let erm = document.getElementById('err')
+                            erm.innerHTML = pdata.err
+                        }else
                             console.log('PUT.pdata', pdata);
                     });
             }
@@ -65,8 +68,9 @@
                 })
                     .then(response => response.json())
                     .then((pdata) => {
-                        if(pdata.code != undefined) {
-                            alert(pdata.code + ' ' + pdata.err_mes);
+                        if(pdata.err != undefined) {
+                            let erm = document.getElementById('err')
+                            erm.innerHTML = pdata.err
                         } else
                             console.log('DELETE.pdata', pdata);
                     });
@@ -77,7 +81,7 @@
         <div class="card w-50" style="margin: auto; margin-top: 5%;">
             <div class="card-body">
                 <h5 class="card-title">Lab18</h5>
-                
+                <p class="card-text" id="err"></p>
                 <form style="margin-top: 2%; "></form>
                 <div class="row" style="margin:auto; padding-bottom: 1%;">
                     <button onclick="Get()" class="btn btn-primary">Список кафедр</button>
