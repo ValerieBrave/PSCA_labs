@@ -1,0 +1,30 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Jobs</title>
+    </head>
+    <body>
+        <a href="http://localhost:3000/home/index">Back to home page</a>
+        {{#if data}}
+        <h3>All Teams</h3>
+        <table>
+            <thead>
+                <th>Team ID</th>
+                <th>Lead name</th>
+                <th>Department</th>
+                <th>Members</th>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td>{{dataValues.team_id}}</td>
+                    <td>{{dataValues.lead_name}}</td>
+                    <td>{{dataValues.department}}</td>
+                    <td>{{dataValues.members}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{/if}}
+    </body>
+</html>

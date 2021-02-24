@@ -1,0 +1,32 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Jobs</title>
+    </head>
+    <body>
+        <a href="http://localhost:3000/home/index">Back to home page</a>
+        {{#if data}}
+        <h3>All Jobs</h3>
+        <table>
+            <thead>
+                <th>Job ID</th>
+                <th>Job Title</th>
+                <th>Job Status</th>
+                <th>Assignee</th>
+                <th>Start Datetime</th>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td>{{dataValues.job_id}}</td>
+                    <td>{{dataValues.job_title}}</td>
+                    <td>{{dataValues.status}}</td>
+                    <td>{{dataValues.emp_name}}</td>
+                    <td>{{dataValues.job_start}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{/if}}
+    </body>
+</html>
