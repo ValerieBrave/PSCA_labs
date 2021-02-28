@@ -2,10 +2,71 @@
     <head>
         <meta charset="UTF-8">
         <title>Jobs</title>
+        <script>
+            function Delete() {
+                let id = document.getElementById('job_id')
+                fetch('http://localhost:3000/job/delete/'+id.value, {
+                    method: 'DELETE',
+                    headers: {'Content-Type':'application/json'}
+                })
+                .then(response => {return response.text() })
+                .then((body) => {
+                    var newHTML = document.open("text/html", "replace"); 
+                    newHTML.write(body); 
+                    newHTML.close(); 
+                })
+            }
+            function Put() {
+                let job_id = document.getElementById('job_id2')
+                let job_title = document.getElementById('job_title')
+                let status = document.getElementById('status')
+                let emp_name = document.getElementById('emp_name')
+                fetch('http://localhost:3000/job/edit', {
+                    method: 'PUT',
+                    headers: {'Content-Type':'application/json','Accept':'application/json, text/html'},
+                    body: JSON.stringify({
+                        job_id: job_id.value,
+                        job_title: job_title.value,
+                        status: status.value,
+                        emp_name: emp_name.value
+                    })
+                })
+                .then(response => {return response.text() })
+                .then((body) => {
+                    var newHTML = document.open("text/html", "replace"); 
+                    newHTML.write(body); 
+                    newHTML.close(); 
+                })
+            }
+        </script>
     </head>
     <body>
         <a href="http://localhost:3000/home/index">Back to home page</a>
+
+        <form method="POST" action="http://localhost:3000/job/add">
+            <input type="text" name="job_title" placeholder="title"/>
+            <input type="text" name="status" placeholder="status"/>
+            <input type="text" name="emp_name" placeholder="assignee"/>
+            <input type="text" name="job_start" pattern="[0-9]{8} [0-9]{2}:[0-9]{2}:[0-9]{2} PM"/>
+            <button type="submit">Add</button>
+        </form>
+        <br/>
+        <input type="number" id="job_id"/>
+        <button onclick="Delete()">Delete</button>
+        <br/>
+        <input type="number" id="job_id2" placeholder="job ID"/>
+        <input type="text" id="job_title" placeholder="title"/>
+        <input type="text" id="status" placeholder="status"/>
+        <input type="text" id="emp_name" placeholder="assignee"/>
+        <button onclick="Put()">Edit</button>
+        {{#if err}}
+        <h2 style="color: red;">{{err}}</h2>
+        {{/if}}
+        {{#if mes}}
+        <h2 style="color: green;">{{mes}}</h2>
+        {{/if}}
         {{#if data}}
+        
         <h3>All Jobs</h3>
         <table>
             <thead>

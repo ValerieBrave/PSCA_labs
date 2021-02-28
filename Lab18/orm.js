@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize')
 const { Op } = require('sequelize');
-const Model = Sequelize.Model
-
+ 
 class Faculty extends Model{}
 class Pulpit extends Model{}
 class Subject extends Model{}

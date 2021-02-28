@@ -2,9 +2,64 @@
     <head>
         <meta charset="UTF-8">
         <title>Jobs</title>
+        <script>
+            function Delete() {
+                let emp_name = document.getElementById('emp_name')
+                fetch('http://localhost:3000/employee/delete/'+emp_name.value, {
+                    method: 'DELETE',
+                    headers: {'Content-Type':'application/json'}
+                })
+                .then(response => {return response.text() })
+                .then((body) => {
+                    var newHTML = document.open("text/html", "replace"); 
+                    newHTML.write(body); 
+                    newHTML.close(); 
+                })
+            }
+            function Put() {
+                let emp_name = document.getElementById('emp_name2')
+                let position = document.getElementById('position')
+                let team_id = document.getElementById('team_id')
+                fetch('http://localhost:3000/employee/edit', {
+                    method: 'PUT',
+                    headers: {'Content-Type':'application/json','Accept':'application/json, text/html'},
+                    body: JSON.stringify({
+                        emp_name: emp_name.value,
+                        position: position.value,
+                        team_id: team_id.value
+                    })
+                })
+                .then(response => {return response.text() })
+                .then((body) => {
+                    var newHTML = document.open("text/html", "replace"); 
+                    newHTML.write(body); 
+                    newHTML.close(); 
+                })
+            }
+        </script>
     </head>
     <body>
         <a href="http://localhost:3000/home/index">Back to home page</a>
+        <form method="POST" action="http://localhost:3000/employee/add">
+            <input type="text" name="emp_name" required placeholder="Employee name"/>
+            <input type="text" name="position" placeholder="Employee position"/>
+            <input type="number" name="team_id" placeholder="Team ID"/>
+            <button type="submit">Add</button>
+        </form>
+        <br/>
+        <input type="text" id="emp_name" placeholder="Employee name"/>
+        <button onclick="Delete()">Delete</button>
+        <br/>
+        <input type="text" id="emp_name2" placeholder="Employee name"/>
+        <input type="text" id="position" placeholder="Employee position"/>
+        <input type="number" id="team_id" placeholder="Team ID"/>
+        <button onclick="Put()">Edit</button>
+        {{#if err}}
+        <h2 style="color: red;">{{err}}</h2>
+        {{/if}}
+        {{#if mes}}
+        <h2 style="color: green;">{{mes}}</h2>
+        {{/if}}
         {{#if data}}
         <h3>All Employees</h3>
         <table>

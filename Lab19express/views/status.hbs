@@ -1,10 +1,37 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Jobs</title>
+        <title>Statuses</title>
+        <script>
+            function Delete() {
+                let stat = document.getElementById('status')
+                fetch('http://localhost:3000/status/delete/'+stat.value, {
+                    method: 'DELETE',
+                    headers: {'Content-Type':'application/json'}
+                })
+                .then(response => {return response.text() })
+                .then((body) => {
+                    var newHTML = document.open("text/html", "replace"); 
+                    newHTML.write(body); 
+                    newHTML.close(); 
+                })
+            }
+        </script>
     </head>
     <body>
         <a href="http://localhost:3000/home/index">Back to home page</a>
+        <form method="POST" action="http://localhost:3000/status/add">
+            <input type="text" name="status" id="status">
+            <button type="submit">Add</button>
+        </form>
+        <button onclick='Delete()'>Delete</button>
+        
+        {{#if err}}
+        <h2 style="color: red;">{{err}}</h2>
+        {{/if}}
+        {{#if mes}}
+        <h2 style="color: green;">{{mes}}</h2>
+        {{/if}}
         {{#if data}}
         <h3>All Statuses</h3>
         <table>

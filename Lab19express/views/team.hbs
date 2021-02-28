@@ -1,10 +1,70 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Jobs</title>
+        <title>Teams</title>
+        <script>
+            function Delete() {
+                let team_id = document.getElementById('team_id')
+                fetch('http://localhost:3000/team/delete/'+team_id.value, {
+                    method: 'DELETE',
+                    headers: {'Content-Type':'application/json'}
+                })
+                .then(response => {return response.text() })
+                .then((body) => {
+                    var newHTML = document.open("text/html", "replace"); 
+                    newHTML.write(body); 
+                    newHTML.close(); 
+                })
+            }
+
+            function Put() {
+                let team_id = document.getElementById('team_id2')
+                let lead_name = document.getElementById('lead_name')
+                let department = document.getElementById('department')
+                let members = document.getElementById('members')
+                fetch('http://localhost:3000/team/edit', {
+                    method: 'PUT',
+                    headers: {'Content-Type':'application/json','Accept':'application/json, text/html'},
+                    body: JSON.stringify({
+                        team_id: team_id.value,
+                        lead_name: lead_name.value,
+                        department: department.value,
+                        members: members.value
+                    })
+                })
+                .then(response => {return response.text() })
+                .then((body) => {
+                    var newHTML = document.open("text/html", "replace"); 
+                    newHTML.write(body); 
+                    newHTML.close(); 
+                })
+            }
+        </script>
     </head>
     <body>
         <a href="http://localhost:3000/home/index">Back to home page</a>
+        <form method="POST" action="http://localhost:3000/team/add">
+            <input type="text" name="lead_name"/>
+            <input type="text" name="department"/>
+            <input type="number" name="members"/>
+            <button type="submit">Add</button>
+        </form>
+
+        <input type="number" id="team_id"/>
+        <button onclick='Delete()'>Delete</button>
+        <br/>
+        <input type="number" id="team_id2"/>
+        <input type="text" id="lead_name"/>
+        <input type="text" id="department"/>
+        <input type="number" id="members"/>
+        <button onclick='Put()'>Edit</button>
+
+        {{#if err}}
+        <h2 style="color: red;">{{err}}</h2>
+        {{/if}}
+        {{#if mes}}
+        <h2 style="color: green;">{{mes}}</h2>
+        {{/if}}
         {{#if data}}
         <h3>All Teams</h3>
         <table>

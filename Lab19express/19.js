@@ -17,6 +17,7 @@ app.engine('.hbs', hbs.engine)
 app.set('views', path.resolve(__dirname, 'views'))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())  //почему без этого тело PUT пустое, а POST нормально?
 
 const homeRouter = require('./routes/home_routes')()
 const jobsRouter = require('./routes/jobs_router')()
