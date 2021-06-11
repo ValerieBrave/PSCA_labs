@@ -1,0 +1,14 @@
+{
+  "name": "lab30",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "valeriasmelova",
+  "license": "ISC",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.53.0"
+  }
+}
