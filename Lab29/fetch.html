@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch for wasm</title>
+</head>
+<body>
+    <h1>WASM</h1>
+    <h5 id="sum">sum(10, 5) = </h5>
+    <h5 id="sub">sub(10, 5) = </h5>
+    <h5 id="mul">mul(10, 5) = </h5>
+
+    <script>
+        (async () => {
+            const res = fetch('http://localhost:3000/a.out.wasm', {mode: 'no-cors'})
+            const {module, instance} = await WebAssembly.instantiateStreaming(res)
+            document.getElementById('sum').innerHTML += instance.exports.sum(10,5)
+            document.getElementById('sub').innerHTML += instance.exports.sub(10,5)
+            document.getElementById('mul').innerHTML += instance.exports.mul(10,5)
+        })()
+    </script>
+</body>
+</html>
